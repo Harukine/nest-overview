@@ -10,9 +10,13 @@ export class CatsController {
     return 'This action adds a new cat';
   }
 
+  // @Get()
+  // findAll(@Req() request: Request): string {
+  //   return 'This action returns all cats';
+  // }
   @Get()
-  findAll(@Req() request: Request): string {
-    return 'This action returns all cats';
+  async findAll(): Promise<any[]> {
+    return [];
   }
 
   @Get(':id')
