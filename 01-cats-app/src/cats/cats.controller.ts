@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Header, HttpCode, HttpException, HttpStatus, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Header, HttpCode, HttpException, HttpStatus, Param, Post, Req, UseFilters } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cats.interface';
+import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
 
 @Controller('cats')
 export class CatsController {
@@ -10,7 +11,9 @@ export class CatsController {
   @Post()
   @HttpCode(204) // Custom status code
   @Header('Cache-Control', 'none')
+  // @UseFilters(new HttpExceptionFilter()) // Custom Exception Filter
   async create(@Body() createCatDto: CreateCatDto) {
+    // throw new ForbiddenException();
     this.catsService.create(createCatDto);
   }
 
