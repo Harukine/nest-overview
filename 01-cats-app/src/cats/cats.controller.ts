@@ -5,13 +5,15 @@ import { Cat } from './interfaces/cats.interface';
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
 
 @Controller('cats')
+// @UseFilters(new HttpExceptionFilter()) // Controller-scoped filter
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
   @HttpCode(204) // Custom status code
   @Header('Cache-Control', 'none')
-  // @UseFilters(new HttpExceptionFilter()) // Custom Exception Filter
+  // @UseFilters(new HttpExceptionFilter()) // Created an instance of Custom Exception Filter
+  // @UseFilters(HttpExceptionFilter) // Passing a Class of Custom Exeption Filter enabling dependency injection
   async create(@Body() createCatDto: CreateCatDto) {
     // throw new ForbiddenException();
     this.catsService.create(createCatDto);
