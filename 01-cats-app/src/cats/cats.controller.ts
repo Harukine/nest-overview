@@ -19,6 +19,7 @@ import { Cat } from './interfaces/cats.interface';
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
 import { JoiValidationPipe } from '../common/pipes/joi.validation.pipe';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
+import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 
 @Controller('cats')
 // @UseFilters(new HttpExceptionFilter()) // Controller-scoped filter
@@ -44,9 +45,9 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param() params): string {
+  async findOne(@Param('id', new ParseIntPipe()) id) {
     // console.log(params.id);
-    return `This action returns a #${params.id} cat`;
+    return this.catsService.findOne(id);
   }
 
   @Get('ab*cd')
